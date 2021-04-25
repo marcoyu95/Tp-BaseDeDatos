@@ -1,0 +1,29 @@
+alter table cliente add constraint cliente_pk    primary key (numero_cliente);
+
+alter table tarjeta add constraint tarjeta_pk    primary key (numero_tarjeta);
+
+alter table comercio add constraint comercio_pk    primary key (numero_comercio);
+
+alter table compra add constraint compra_pk    primary key (numero_operacion);
+
+alter table rechazo add constraint rechazo_pk    primary key (numero_rechazo);
+
+alter table cierre add constraint cierre_pk    primary key (anio,mes,terminacion);
+
+alter table cabecera add constraint cabecera_pk    primary key (numero_resumen);
+
+alter table detalle add constraint detalle_pk    primary key (numero_resumen, numero_linea);
+
+alter table alerta add constraint alerta_pk    primary key (numero_alerta);
+
+
+
+alter table tarjeta add constraint numero_cliente_fk foreign key (numero_cliente) references cliente (numero_cliente);
+
+alter table compra add constraint numero_tarjeta_fk foreign key (numero_tarjeta) references tarjeta (numero_tarjeta);
+
+alter table compra add constraint numero_comercio_fk foreign key (numero_comercio) references comercio (numero_comercio);
+
+alter table cabecera add constraint numero_tarjeta_fk foreign key (numero_tarjeta) references tarjeta (numero_tarjeta);
+
+alter table consumo add constraint numero_comercio_fk foreign key (numero_comercio) references comercio (numero_comercio);

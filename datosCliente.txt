@@ -1,0 +1,167 @@
+insert into cliente values (
+    1, 
+    'Homero Jay',
+    'Simpson',
+    'san martin 7634'
+    ,'116573437746'
+);
+
+insert into cliente values (
+    2, 
+    'Bartholomew ', 
+    'Simpson',
+    'peron 7612',
+    '116745743925'
+);
+
+insert into cliente values (
+    3, 
+    'Lisa', 
+    'Simpson',
+    'brumana 1943',
+    '116258488994'
+);
+
+insert into cliente values (
+    4, 
+    'Margaret Abigail', 
+    'Simpson',
+    'tucuman 654',
+    '113695456987'
+);
+
+insert into cliente values (
+    5, 
+    'Marjorie', 
+    'Simpson Bouvier',
+    'velazquez 59',
+    '114569821364'
+);
+
+insert into cliente values (
+    6, 
+    'Nedwar', 
+    'Flanders',
+    '9 de julio 453',
+    '115631478521'
+);
+
+insert into cliente values (
+    7, 
+    'Morris Lester', 
+    'Szyslak',
+    'gabriela mistral 254',
+    '114563214001'
+);
+
+insert into cliente values (
+    8, 
+    'Nelson', 
+    'Rufino',
+    'uriburu 6969',
+    '110001236412'
+);
+
+insert into cliente values (
+    9, 
+    'Charles Montgomery Plantagenet Schicklgruber', 
+    'Burns',
+    'sargento cabral 654',
+    '114475206871'
+);
+
+insert into cliente values (
+    10, 
+    'Milhouse', 
+    'Van Houten',
+    'mitre 420',
+    '115698512236'
+);
+
+insert into cliente values (
+    11, 
+    'Bob', 
+    'Patiño',
+    'irusta 69',
+    '114562398412'
+);
+
+insert into cliente values (
+    12, 
+    'Clancy', 
+    'Gorgori',
+    'buzolini 5645',
+    '116775624596'
+);
+
+insert into cliente values (
+    13, 
+    'Barney', 
+    'Goméz',
+    'san martin 328',
+    '116321487562'
+);
+
+insert into cliente values (
+    14, 
+    'Herschel Shmoikel Pinchas Yerucham', 
+    'Krustofski',
+    'lacon 735',
+    '112365980345'
+);
+
+insert into cliente values (
+    15, 
+    'Apu', 
+    'Nahasapeemapetilon',
+    'chade 4685',
+    '115546321598'
+);
+
+insert into cliente values (
+    16, 
+    'Manjula', 
+    'Nahasapeemapetilon',
+    'tuma 320',
+    '112305698410'
+);
+
+insert into cliente values (
+    17, 
+    'Seymour', 
+    'Skinner',
+    'italia 95',
+    '112546305870'
+);
+
+insert into cliente values (
+    18, 
+    'Edna', 
+    'Krabappel',
+    'tribulato 874',
+    '116699503145'
+);
+
+insert into cliente values (
+    19, 
+    'Chester', 
+    'Turley',
+    'ilia 781',
+    '112453019873'
+);
+
+insert into cliente values (
+    20, 
+    'Jimbo', 
+    'Roso',
+    'rusia comunista 492',
+    '112354147563'
+);
+
+insert into cliente values (
+    21, 
+    'Julius', 
+    'Hibbert',
+    'rusia comunista 492',
+    '114477536200'
+);

@@ -1,0 +1,229 @@
+---------Autorizar una compra-------------
+
+create or replace function autorizacion_compra(num_tar_pasado char(16), cod_seg_pasado char(4), num_comer_pasado int, monto_compra decimal(7,2)) returns boolean as $$
+declare 
+    fila record;
+    monto_no_pagado int;
+begin
+     select * into fila from tarjeta where numero_tarjeta = num_tar_pasado;
+     
+     if not found then 
+        raise notice 'TARJETA NO VIGENTE O NO EXISTENTE ';
+        insert into rechazo (numero_tarjeta,numero_comercio,fecha,monto,motivo) 
+            values (num_tar_pasado,num_comer_pasado,CURRENT_TIMESTAMP,monto_compra,'tarjeta no válida ó no vigente.');
+            return false;
+    else
+        raise notice 'TARJETA VALIDAAAAA';
+        if fila.cod_seguridad != cod_seg_pasado then
+            raise notice 'NUMERO DE SEGURIDAD INCORRECTO';
+            insert into rechazo (numero_tarjeta,numero_comercio,fecha,monto,motivo) 
+                values (num_tar_pasado,num_comer_pasado,CURRENT_TIMESTAMP,monto_compra,'código de seguridad inválido.');
+            return false;
+        else 
+            raise notice 'NUMERO DE SEGURAD CORRECTO!!!!!!!!***';
+            if fila.estado = 'suspendida' then
+                raise notice ' LA TARJETA SE ENCUENTRA SUSPENDIDA!';
+                insert into rechazo (numero_tarjeta,numero_comercio,fecha,monto,motivo) 
+                    values (num_tar_pasado,num_comer_pasado,CURRENT_TIMESTAMP,monto_compra,'la tarjeta se encuentra suspendida.');
+                return false;
+            else
+                raise notice 'LA TARJETA SE ENCUENTRA HABILITADA'; 
+                if (cast(fila.valida_hasta as int)) < obtener_fecha_actual() then
+                    raise notice 'TARJETA VENCIDA';
+                    insert into rechazo (numero_tarjeta,numero_comercio,fecha,monto,motivo) 
+                        values (num_tar_pasado,num_comer_pasado,CURRENT_TIMESTAMP,monto_compra,'plazo de vigencia expirado.');
+                    return false;
+                else 
+                    raise notice 'LA TARJETA NO ESTA VENCIDA';
+                    monto_no_pagado := (select sum(monto) from compra where fila.numero_tarjeta = compra.numero_tarjeta and compra.pagado = false);
+                    if (monto_compra > fila.limite_compra) or (monto_compra + monto_no_pagado > fila.limite_compra) then
+                        raise notice 'SUPERA EL LIMITE DE COMPRA';
+                        insert into rechazo (numero_tarjeta,numero_comercio,fecha,monto,motivo) 
+                            values (num_tar_pasado,num_comer_pasado,CURRENT_TIMESTAMP,monto_compra,'supera límite de tarjeta.');
+                        return false;
+                    else 
+                        raise notice 'No supera el limite';
+                    end if;
+                end if;
+            end if;        
+        end if;     
+    end if;
+
+    insert into compra (numero_tarjeta, numero_comercio, fecha, monto, pagado)
+        values(num_tar_pasado, num_comer_pasado, CURRENT_TIMESTAMP, monto_compra, false);
+
+
+    return true;
+end;
+$$ language plpgsql;
+
+
+create or replace function obtener_fecha_actual() returns int as $$
+declare
+    mes char(2);
+    año char(4);
+begin
+    mes = cast(extract(month from current_date) as char(02));
+    año = cast(extract(year from current_date) as char(04));
+    if (length(mes) = 1) then
+        mes = concat('0', mes);
+    end if;
+    
+    return cast(concat(año,mes) as int);
+end;
+$$ language plpgsql;
+
+-------------------GENERAR RESUMEN-------------------
+
+create or replace function generar_reporte(num_cliente int, fecha_inicio date, fecha_final date) returns void as $$
+declare
+    num_tar_pasado char(16);
+    fila record;
+    v record;
+    i record;
+    cabecera_id int;
+    linea int;
+    comercio_aux record;
+    cliente_aux record;
+    monto_final decimal(7,2);
+begin
+
+    for i in select * from tarjeta where(tarjeta.numero_cliente = num_cliente) loop
+        monto_final := 0;
+        select * into fila from tarjeta where i.numero_tarjeta = numero_tarjeta;
+        if not found THEN
+            raise notice 'TARJETA NO EXISTENTE';
+        else
+            
+            select * into cliente_aux from cliente where(numero_cliente = fila.numero_cliente);
+            insert into cabecera(nombre, apellido, domicilio, numero_tarjeta, desde, hasta, vence, total) 
+                values (cliente_aux.nombre, cliente_aux.apellido, cliente_aux.domicilio, fila.numero_tarjeta, fecha_inicio, fecha_final,to_date(i.valida_hasta,'YYYYMM'),0); 
+                select count(*) into cabecera_id  from cabecera;
+            linea := 1;
+
+            for v in select * from compra where (compra.numero_tarjeta = fila.numero_tarjeta and compra.fecha<fecha_final and compra.fecha > fecha_inicio) loop
+                
+                select * into comercio_aux from comercio where(comercio.numero_comercio = v.numero_comercio);
+                
+                insert into detalle values (cabecera_id, linea, v.fecha, comercio_aux.nombre, v.monto);
+                
+                monto_final = monto_final + v.monto;
+
+                linea := linea + 1;
+            
+            end loop;
+            update cabecera set total = monto_final where (numero_resumen = cabecera_id);
+        end if;
+    end loop;    
+end;
+$$ language plpgsql;
+
+
+-------------------ALERTAS-------------------
+
+create or replace function alerta_insert_rechazo() returns trigger as $$
+declare 
+begin
+    
+    insert into alerta (numero_tarjeta, fecha, numero_rechazo, codigo_alerta, descripcion) 
+        values (new.numero_tarjeta, new.fecha, new.numero_rechazo, 2, new.motivo);
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger alerta_rechazo_trg
+    after insert
+    on rechazo
+    for each row
+execute procedure alerta_insert_rechazo();
+
+-----------------------------------------------------------
+create or replace function alerta_compra() returns trigger as $$
+declare
+    compra_un_minuto record;
+    compra_cinco_minutos record;
+begin
+    select * into compra_un_minuto from compra, comercio 
+       where compra.numero_comercio = comercio.numero_comercio
+            and compra.fecha > CURRENT_TIMESTAMP - (1 * interval '1 minute')
+            and compra.numero_tarjeta = new.numero_tarjeta
+            and compra.numero_comercio != new.numero_comercio
+            and comercio.codigo_postal = (select codigo_postal from comercio 
+                                            where numero_comercio = new.numero_comercio);
+
+    if found then 
+        insert into alerta (numero_tarjeta, fecha, codigo_alerta, descripcion) 
+            values (new.numero_tarjeta, new.fecha, 1, 'DOS COMPRAS EN MENOS DE UN MINUTO EN COMERCIOS DISTINTOS UBICACOS EN EL MISMO CODIGO POSTAL.');
+    end if;
+
+
+    select * into compra_cinco_minutos from compra, comercio
+        where compra.numero_comercio = comercio.numero_comercio
+            and compra.fecha > CURRENT_TIMESTAMP - (5 * interval '1 minute')
+            and compra.numero_tarjeta = new.numero_tarjeta
+            and compra.numero_comercio != new.numero_comercio
+            and comercio.codigo_postal != (select codigo_postal from comercio 
+                                            where numero_comercio = new.numero_comercio);
+
+    if found then
+       insert into alerta (numero_tarjeta, fecha, codigo_alerta, descripcion) 
+           values (new.numero_tarjeta, new.fecha, 5, 'DOS COMPRAS EN MENOS DE 5 MINUTOS EN COMERCIOS CON DIFERENTES CODIGOS POSTALES.');
+   end if;
+    
+    return new;
+
+end;
+$$ language plpgsql;
+
+create trigger alerta_compra_trg 
+    after insert
+    on compra
+    for each row
+execute procedure alerta_compra();
+
+---------------------------------------------------
+
+create or replace function alerta_dos_excesolimite() returns trigger as $$
+declare 
+    fila record;
+begin 
+    select * into fila from alerta
+        where alerta.numero_tarjeta = new.numero_tarjeta
+        and cast(new.fecha as date) = cast(alerta.fecha as date)
+        and alerta.descripcion = 'supera límite de tarjeta.'
+        and new.motivo = 'supera límite de tarjeta.';
+
+    if found then
+        insert into alerta (numero_tarjeta, fecha, numero_rechazo, codigo_alerta, descripcion)
+            values (new.numero_tarjeta, new.fecha, new.numero_rechazo,1255,'Tarjeta suspendida por exceso de limite en el mismo dia');
+
+            update tarjeta set estado = 'suspendida' where numero_tarjeta = new.numero_tarjeta;
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger alerta_dos_excesolimite_trg
+after insert
+on rechazo
+for each row
+execute procedure alerta_dos_excesolimite();
+
+-------------------CONSUMOS-------------------
+
+create or replace function consumos_test() returns void as $$
+declare
+    v record;
+begin
+    for v in select * from consumo loop
+        if (autorizacion_compra(v.numero_tarjeta, v.cod_seguridad, v.numero_comercio, v.monto)) then
+            raise notice 'COMPRA AUTORIZADA';
+            raise notice '*****************************************';
+        else 
+            raise notice 'COMPRA RECHAZADA';
+            raise notice '*****************************************';
+        end if;
+    end loop;
+
+end;
+$$ language plpgsql;

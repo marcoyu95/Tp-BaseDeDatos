@@ -1,0 +1,23 @@
+insert into tarjeta values ('5304494412937978',1,'200907','201007','7006',12000,'vigente');
+insert into tarjeta values ('5170299211507992',2,'201612','201712','9930',12000,'vigente');
+insert into tarjeta values ('5101309768445324',3,'201902','202012','5139',16000,'vigente');
+insert into tarjeta values ('5375840836976352',4,'201402','201602','6955',11000,'suspendida');
+insert into tarjeta values ('5489768187596367',5,'200809','201009','5293',10000,'vigente');
+insert into tarjeta values ('5525388673835801',6,'201901','202101','1071',18000,'vigente');
+insert into tarjeta values ('5205571563976002',7,'201905','202105','6865',20000,'suspendida');
+insert into tarjeta values ('5264924563748269',8,'201706','201705','5041',50000,'vigente');
+insert into tarjeta values ('5335596241375262',9,'201504','201910','6122',60000,'vigente');
+insert into tarjeta values ('5409438493713216',10,'200207','201910','3823',72000,'vigente');
+insert into tarjeta values ('5438408872858424',11,'201902','202003','3776',1000,'vigente');
+insert into tarjeta values ('5242353617968938',12,'201407','201910','6799',62000,'anulada');
+insert into tarjeta values ('5318077414177406',13,'201904','202010','9447',32000,'vigente');
+insert into tarjeta values ('5528797798964477',14,'201902','202010','8669',41000,'vigente');
+insert into tarjeta values ('5131325337069175',15,'201906','202006','1388',69000,'vigente');
+insert into tarjeta values ('4856614857019140',16,'201902','202211','3735',5000,'vigente');
+insert into tarjeta values ('4542623612923777',17,'201901','201905','4252',2000,'suspendida');
+insert into tarjeta values ('4152671347008886',18,'201802','201910','1284',30000,'vigente');
+insert into tarjeta values ('4351102423887653',19,'201807','201910','7338',90000,'vigente');
+insert into tarjeta values ('4158473368388675',19,'201206','201910','8167',40000,'vigente');
+insert into tarjeta values ('4017815492979764',20,'201910','202010','1176',76000,'vigente');
+insert into tarjeta values ('4889135968287203',20,'201205','201910','9229',10000,'anulada');
+

@@ -1,0 +1,16 @@
+alter table tarjeta drop constraint numero_cliente_fk;
+alter table compra  drop constraint numero_tarjeta_fk;
+alter table compra  drop constraint numero_comercio_fk;
+alter table cabecera drop constraint numero_tarjeta_fk;
+alter table consumo drop constraint numero_comercio_fk;
+
+
+alter table cliente drop constraint cliente_pk;
+alter table tarjeta drop constraint tarjeta_pk;
+alter table comercio drop constraint comercio_pk;
+alter table compra drop constraint compra_pk;
+alter table rechazo drop constraint rechazo_pk;
+alter table cierre drop constraint cierre_pk;
+alter table cabecera drop constraint cabecera_pk;
+alter table detalle drop constraint detalle_pk;
+alter table alerta drop constraint alerta_pk;

@@ -1,0 +1,88 @@
+create table cliente (
+    numero_cliente      int, 
+    nombre              text, 
+    apellido            text, 
+    domicilio           text, 
+    telefono            char(12)
+);
+
+create table tarjeta (
+    numero_tarjeta      char(16),
+    numero_cliente      int,
+    valida_desde        char(6), 
+    valida_hasta        char(6), 
+    cod_seguridad       char(4),
+    limite_compra       decimal(8,2),
+    estado              char(10)
+);
+
+create table comercio (
+    numero_comercio     int, 
+    nombre              text, 
+    domicilio           text, 
+    codigo_postal       char(8), 
+    telefono            char(12)
+);
+
+create table compra (
+    numero_operacion    serial, 
+    numero_tarjeta      char(16), 
+    numero_comercio     int, 
+    fecha               timestamp, 
+    monto               decimal(7,2),
+    pagado              boolean
+);
+
+create table rechazo (
+    numero_rechazo      serial, 
+    numero_tarjeta      char(16), 
+    numero_comercio     int, 
+    fecha               timestamp, 
+    monto               decimal(7,2), 
+    motivo              text
+);
+
+create table cierre (
+    anio                int, 
+    mes                 int, 
+    terminacion         int, 
+    fecha_inicio        date, 
+    fecha_cierre        date, 
+    fecha_vencimiento   date
+);
+
+create table cabecera (
+    numero_resumen      serial, 
+    nombre              text, 
+    apellido            text, 
+    domicilio           text, 
+    numero_tarjeta      char(16), 
+    desde               date, 
+    hasta               date, 
+    vence               date, 
+    total               decimal(8,2)
+);
+
+create table detalle(
+    numero_resumen      int, 
+    numero_linea        int, 
+    fecha               date, 
+    nombre_comercio     text, 
+    monto               decimal(7,2)
+);
+
+create table alerta (
+    numero_alerta       serial, 
+    numero_tarjeta      char(16), 
+    fecha               timestamp, 
+    numero_rechazo      int, 
+    codigo_alerta       int, 
+    descripcion         text
+);
+
+create table consumo (
+    numero_tarjeta      char(16), 
+    cod_seguridad       char(4), 
+    numero_comercio     int, 
+    monto               decimal(7,2)
+);

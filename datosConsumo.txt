@@ -1,0 +1,122 @@
+--TARJETA INVALIDA
+
+insert into consumo values (
+    '1111111111111111',
+    '4378',
+    1,
+    100.00
+);
+
+-- CODIGO DE SEGURIDAD INVALIDO
+
+insert into consumo values (
+    '5170299211507992',
+    '9931',
+    1,
+    100.00
+);
+
+-- SUPERA EL LIMITE DE COMPRAS
+
+insert into consumo values (
+    '5438408872858424',
+    '3776',
+    7,
+    500.23
+);
+
+insert into consumo values (
+    '5438408872858424',
+    '3776',
+    8,
+    600.30
+);
+
+--  PLAZO DE VIGENCIA EXPIRADO
+
+insert into consumo values (
+    '5304494412937978',
+    '7006',
+    6,
+    300.2
+);
+
+-- TARJETA SUSPENDIDA 
+
+insert into consumo values (
+    '5205571563976002',
+    '6865',
+    20,
+    1500.00
+);
+
+-- DOS COMPRAS EN MENOS DE UN MINUTO EN COMERCIOS DISTINTOS CON EL MISMO CODIGO POSTAL
+
+insert into consumo values (
+    '5335596241375262',
+    '6122',
+    17,
+    100.00
+);
+
+insert into consumo values (
+    '5335596241375262',
+    '6122',
+    18,
+    100.00
+);
+
+-- DOS COMPRAS EN MENOS DE CINCO MINUTOS EN COMERCIOS DISTINTOS CON DISTINTOS CODIGOS POSTALES
+
+insert into consumo values (
+    '5335596241375262',
+    '6122',
+    2,
+    100.00
+);
+
+insert into consumo values (
+    '5335596241375262',
+    '6122',
+    19,
+    100.00
+);
+
+-- DOS COMPRAS CON EXCESO DE LIMITE EN EL MISMO DIA.
+
+insert into consumo values (
+    '4856614857019140',
+    '3735',
+    5,
+    6000.00
+);
+
+insert into consumo values (
+    '4856614857019140',
+    '3735',
+    9,
+    6000.00
+);
+
+--COMPRAS VALIDAS
+
+insert into consumo values (
+    '5409438493713216',
+    '3823',
+    10,
+    600.06
+);
+
+insert into consumo values (
+    '5409438493713216',
+    '3823',
+    5,
+    6500.06
+);
+
+insert into consumo values (
+    '5409438493713216',
+    '3823',
+    3,
+    5397.06
+);

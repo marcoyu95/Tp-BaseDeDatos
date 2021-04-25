@@ -1,0 +1,159 @@
+insert into comercio values (
+    1, 
+    'El japones',
+    'conesa 4201', 
+    'C1643OAA', 
+    '112233450967'
+);
+
+insert into comercio values (
+    2 , 
+    'martin.com',
+    'guatemala 4567', 
+    'R5643OAQ', 
+    '118145114606'
+);
+
+insert into comercio values (
+    3 , 
+    'garbarino',
+    'haiti 229', 
+    'T1213OPÑ',
+    '118906993835'
+);
+
+insert into comercio values (
+    4, 
+    'fravega',
+    'almirante brown 895', 
+    'B1663OVA',
+    '118885619371'
+);
+
+insert into comercio values (
+    5 , 
+    'compumundo',
+    'canada 1235', 
+    'B1663OVA', 
+    '11748877924'
+);
+
+insert into comercio values (
+    6, 
+    'crazy world',
+    'brasil 871',
+    'B1663OVA', 
+    '11873001991'
+);
+
+insert into comercio values (
+    7, 
+    'mcdonalds',
+    'san martin 715', 
+    'Ñ1863OVA', 
+    '113485323811'
+);
+
+insert into comercio values (
+    8, 
+    'burger king',
+    'provincia de buenos aires 7892', 
+    'Z2666OHD', 
+    '116133229530'
+);
+
+insert into comercio values (
+    9, 
+    'escapes pepino',
+    'yapeyu 563', 
+    'Z2666OHÑ', 
+    '119882242875'
+);
+
+insert into comercio values (
+    10, 
+    'axa',
+    'cura brochero 451', 
+    'V6963OVA', 
+    '116333067509'
+);
+
+insert into comercio values (
+    11, 
+    'apple',
+    'rivadavia 7896',
+    'E1653OPK', 
+    '115202014539'
+);
+
+insert into comercio values (
+    12, 
+    'mostaza',
+    'gutierrez 631', 
+    'D5863OVA',
+    '117177072489'
+    );
+    
+insert into comercio values (
+    13, 
+    'don pepone',
+    'jose leon suarez 457',
+    'K6573OVA',
+    '119036508100'
+);
+
+insert into comercio values (
+    14,
+    'el rey de la milanga',
+    'arturo ilia 693',
+    'F1923OVA',
+    '119612561615'
+);
+
+insert into comercio values (
+    15,
+    'kratos',
+    'directorio 666', 
+    'Q16625RT',
+    '11429244777'
+);
+
+insert into comercio values (
+    16, 
+    'parque de la costa',
+    '12 de octubre 5663', 
+    'Q16656CM',
+    '117086481337'
+);
+
+insert into comercio values (
+    17,
+    'nombre',
+    'domicilio',
+    'B1663OVA',
+    '110636654808'
+);
+
+insert into comercio values (
+    18,
+    'duoflow',
+    'alsina 7536',
+    'B1663OVA',
+    '11065634583'
+);
+
+insert into comercio values (
+    19,
+    'punto com',
+    'alsina 115',
+    'B16670VA',
+    '11576737354'
+);
+
+insert into comercio values (
+    20,
+    'probusol',
+    'arturo ilia 4563',
+    'Y1883OVA',
+    '1198749307'
+);

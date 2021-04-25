@@ -1,0 +1,32 @@
+insert into compra (numero_tarjeta, numero_comercio, fecha, monto, pagado) values(
+   '5304494412937978',
+   1,
+   '2008/12/31',
+   20.50,
+   false
+);
+
+insert into compra (numero_tarjeta, numero_comercio, fecha, monto, pagado) values(
+    '4017815492979764',
+    1,
+    '2008/12/31',
+    20.50,
+    false
+);
+
+insert into compra (numero_tarjeta, numero_comercio, fecha, monto, pagado) values(
+    '4889135968287203',
+    1,
+    '2008/12/31',
+    20.50,
+    true
+);
+
+insert into compra (numero_tarjeta, numero_comercio, fecha, monto, pagado) values(
+    '4856614857019140',
+    1,
+    '2008/12/31',
+    100.00,
+    false
+);
+
