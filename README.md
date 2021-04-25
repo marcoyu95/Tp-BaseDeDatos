@@ -1,0 +1,2 @@
+# Tp-BaseDeDatos
+Simular una base de datos que contenga operaciones y procesos requeridos para realizar compras con tarjeta de credito.   Para esto se usara una base de datos en PostgreSQL y una base de datos NoSQL con el fin de comparar ambas.   Para testear la base de datos NoSQL se cargara datos, tablas, funciones y generacion de compras en una base de datos con una aplicacion CLI hecha en GO (GoLang).
